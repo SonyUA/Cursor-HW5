@@ -22,15 +22,17 @@ console.log(`${getArray} --> масив випадкових цілих чисе
 
 function getAverage(...numbers) {
     const num = numbers.flat();
-    const a = 0;
-    const arr = num.length;
+    let arr = [];
+    num.map((elements) => {
+        Number.isInteger(elements) ? arr.push(elements) : false;
+    });
     let result = 0;
-    const sum = num.reduce((previousValue, currentValue) => previousValue + currentValue, a);
-    result = Math.floor(sum) / arr;
-    document.write(`<p>${num.join(", ")} --> ${result.toFixed(1)} середнє арифметичне всіх переданих в неї аргументів</p>`);
-    return `${num} --> ${result.toFixed(1)} середнє арифметичне всіх переданих в неї аргументів`;
+    const sum = arr.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+    result = sum / arr.length;
+    document.write(`<p>${arr.join(", ")} --> ${result.toFixed(1)} середнє арифметичне всіх переданих в неї аргументів</p>`);
+    return `${arr} --> ${result.toFixed(1)} середнє арифметичне всіх переданих в неї аргументів`;
 }
-const average = getAverage(getArray);
+const average = getAverage(6, 21.3, 2, 55, 11, 78, 2, 55, 77, 57, 87, 23, 2, 56, 3, 2);
 console.log(average);
 
 /*Створіть функцію getMedian(...numbers) 
@@ -39,15 +41,20 @@ console.log(average);
 Приклад: getMedian(1, 2, 3, 4) –> 2.5 
 Приклад: getMedian(1, 2, 3, 4, 5) –> 3 */
 
+function compareNumbers(a, b) {
+    if (a > b) return 1;
+    if (a < b) return -1;
+    return 0;
+}
+
 function getMedian(...numbers) {
-    function sor(a, b) {
-        if (a > b) return 1;
-        if (a < b) return -1;
-        return 0;
-    }
-    const num = numbers.flat().sort(sor);
+    const num = numbers.flat().sort(compareNumbers);
+    let arr = [];
+    num.map((elements) => {
+        Number.isInteger(elements) ? arr.push(elements) : false;
+    });
     let result = 0;
-    num.map((elements, index, array) => {
+    arr.map((elements, index, array) => {
         let evenOdd = array.length % 2;
         if (evenOdd === 0) {
             let half = array.length / 2;
@@ -60,8 +67,7 @@ function getMedian(...numbers) {
     document.writeln(`<p>${num.join(", ")} --> ${result} медіанa всіх переданих в неї аргументів</p>`);
     return `${num} --> ${result} медіанa всіх переданих в неї аргументів`;
 }
-
-const median = getMedian(getArray);
+const median = getMedian(6, 2, 23.4, 55, 11, 78, 2, 55, 77, 57, 87, 23, 2, 56, 3, 2);
 console.log(median);
 
 /*Створіть функцію filterEvenNumbers(...numbers) – яка фільтрує парні числа передані як аргументи функції
@@ -75,22 +81,22 @@ function filterEvenNumbers(...numbers) {
     document.writeln(`<p>${num.join(", ")} --> ${result} непарні числа</p>`);
     return `${num} --> ${result} непарні числа`;
 }
-
 const filter = filterEvenNumbers(1, 2, 3, 4, 6, 16, 17, 23, 55);
 console.log(filter);
 
 /*Створіть функцію countPositiveNumbers(...numbers) – яка порахує кількість чисел більших 0
 Приклад: countPositiveNumbers(1, -2, 3, -4, -5, 6) -> 3 */
+
 function countPositiveNumbers(...numbers) {
     const num = numbers.flat();
     let count = 0;
     num.forEach((a) => {
-        return a > 0 ? count++ : false;
+        return a > 0 && a !== true ? count++ : false;
     });
     document.writeln(`<p>${num.join(", ")} --> ${count}  кількість чисел більших 0</p>`);
     return `${num.join(", ")} --> ${count}  кількість чисел більших 0`;
 }
-const countPosNum = countPositiveNumbers(1, -2, 3, -4, -5, 6);
+const countPosNum = countPositiveNumbers(1, true, -2, 3, -4, -5, 6);
 console.log(countPosNum);
 
 /*Створіть функцію getDividedByFive(...numbers) 
